@@ -1,11 +1,4 @@
-/******************************************************************************
-
-                              Online C++ Compiler.
-               Code, Compile, Run and Debug C++ program online.
-Write your code in this editor and press "Run" button to compile and execute it.
-
-*******************************************************************************/
-
+#include <climits>
 #include <iostream>
 #include <vector>
 #include <list>
@@ -20,6 +13,7 @@ namespace graph {
         int id{0};
         bool visited{false};
         NodeVector children;
+        NodePtr parent;
         int position{0}; //position relative to parent 1 = left, 2 = right (0 is for non binary graphs)
     };
 
@@ -37,7 +31,18 @@ namespace graph {
 
     NodePtr make_node(int id);
 
+    /*!
+     * \brief returns node to the position relative to parent
+     */
     NodePtr getNode(NodePtr parent, NodePosition position);
 
+    /*!
+     * \brief follows nodes from parent according to positions list of positions and returns last
+     */
+    NodePtr getNode(NodePtr parent, std::vector<NodePosition> positions);
+
     void addEdge(NodePtr parent, NodePtr new_node, NodePosition position=NONE);
+
+    bool isBST(NodePtr root, int _min=INT_MIN, int _max=INT_MAX, bool _is_bst=true);
+
 } //namespace graph

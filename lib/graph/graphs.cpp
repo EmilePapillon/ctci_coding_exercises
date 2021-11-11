@@ -85,8 +85,17 @@ namespace graph {
         return nullptr;
     }
 
+    NodePtr getNode(NodePtr parent,  std::vector<NodePosition> positions){
+        NodePtr result = parent; 
+        for (NodePosition position  : positions){
+            result = getNode(result, position);
+        }
+        return result;
+    }
+
     void addEdge(NodePtr parent, NodePtr new_node, NodePosition position){
-        new_node->position=position;
+        new_node->position = position;
+        new_node->parent = parent;
 
         // if not a binary tree, simply add node
         if (position == NONE){
@@ -102,5 +111,29 @@ namespace graph {
             parent->children.push_back(new_node); 
         }
     }
+
+    /*!
+     * \brief Check weather a graph is a binary search tree
+     * \param root: root of the tree
+     * \_min: used internally 
+     * \_max: used internally
+     * \_is_bst: used internally
+     */ 
+    bool isBST(NodePtr root, int _min, int _max, bool _is_bst){  //optimized version of isBST()
+        if (!root || !_is_bst){
+            return _is_bst; 
+        }
+
+        int id = root -> id;
+        if (id < _min || id > _max){
+            _is_bst = false;
+        }
+
+        _is_bst = isBST(getNode(root, LEFT), INT_MIN, root->id, _is_bst);
+        _is_bst = isBST(getNode(root, RIGHT), root->id, INT_MAX, _is_bst);
+
+        return _is_bst;
+    }
+
 
 } //namespace graph

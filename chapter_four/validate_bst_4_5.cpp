@@ -41,7 +41,7 @@ int TreeMin(NodePtr root, int min = INT_MAX){
 	return min;
 }
 
-bool isBST(NodePtr root, bool is_bst = true) {
+bool badIsBST(NodePtr root, bool is_bst = true) {
 	NodeVector visited; 
 
 	if (!NodeIsInVector(root, visited)) {
@@ -85,7 +85,7 @@ bool checkBST(NodePtr root, int min=INT_MIN, int max=INT_MAX, bool is_bst=true){
 // Driver code 
 void echo_binary_result(NodePtr root){
 	echo("Testing if BST");
-	if (isBST(root)) {
+	if (badIsBST(root)) {
 		std::cout << "it is a binary tree\n";
 	} else {
 		std::cout << "it is NOT a binary tree\n";
