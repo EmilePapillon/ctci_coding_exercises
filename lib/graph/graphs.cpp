@@ -71,10 +71,6 @@ namespace graph {
         return node;
     }
 
-    // checks if tree is a binary search tree
-    bool isBST(NodePtr root){
-        return true;
-    }
 
     NodePtr getNode(NodePtr parent,  NodePosition position){
         for( NodePtr child : parent->children ) {
