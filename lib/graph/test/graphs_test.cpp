@@ -20,20 +20,20 @@ int main()
     //test default callbacks (print nodes)
     std::cout << "DFS: ";
     std::cout<< "\n";
-    DFS(root, [](NodePtr node, void * userdata){ std::cout << node->id << " " ;}, nullptr);
+
+    DFS(root, [](NodePtr node){ std::cout << node->id << " " ;});
     std::cout << "\n\n" ;
     std::cout << "BFS: ";
     std::cout << "\n";
-    BFS(root, [](NodePtr node, void * userdata){ std::cout << node->id << " " ;}, nullptr);
+    BFS(root, [](NodePtr node){ std::cout << node->id << " " ;});
     std::cout << "\n\n" ;
 
     int count = 0;
-    DFS(root, [](NodePtr node, void * count){ ++*(int*)count; }, (void*) &count);
+    DFS(root, [&count](NodePtr node) mutable { ++count; });
     std::cout << "DFS count: there are " << count << " nodes.\n";
-
-    //test with non NULL callback function and used data
+    
     count = 0;
-    BFS(root, [](NodePtr node, void * count){ ++*(int*)count; }, (void*) &count);
+    BFS(root, [&count](NodePtr node) mutable { ++count; });
     std::cout << "BFS count: there are " << count << " nodes.\n";
     return 0;
 }

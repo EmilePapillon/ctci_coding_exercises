@@ -5,6 +5,7 @@ using namespace graph;
 typedef std::pair<NodePtr, NodePtr> dependency_t; 
 typedef std::vector<dependency_t> dependency_list_t;
 NodeVector BuildOrder(NodeVector projects, dependency_list_t dependencies){
+	std::vector<std::string> translation{"a", "b", "c", "d", "e", "f"};
 	if (projects.empty() || dependencies.empty()) return projects; 
 
 	NodeVector build_order; 
@@ -15,8 +16,16 @@ NodeVector BuildOrder(NodeVector projects, dependency_list_t dependencies){
 	}
 
 	for (NodePtr project : projects){
+		std::cout << "Analysing project " << translation[project->id] << "\n";
+		// if the project has no parent, do a DFS from it and add any nodes not already there to the BO.
 		if (!project->parent){
-			DFS(project, [](){})
+			std::cout << "Project " << translation[project->id] << " has no parent. Performing DFS\n";
+			DFS<NodeVector*>(project, [translation](NodePtr node, NodeVector *bo){
+				std::cout << "DFS visiting node " << translation[node->id] << "\n";
+				if (!NodeIsInVector(node, *bo)){
+					bo->push_back(node);
+				}
+			}, &build_order);
 		}
 	}
 	return build_order;

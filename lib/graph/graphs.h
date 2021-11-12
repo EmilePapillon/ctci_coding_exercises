@@ -7,6 +7,7 @@
 #include <list>
 #include <memory>
 #include <algorithm>
+#include <functional>
 namespace graph {
 
     typedef std::shared_ptr<struct Node> NodePtr;
@@ -28,9 +29,11 @@ namespace graph {
 
     bool NodeIsInVector(NodePtr node, NodeVector node_vector);
 
-    void DFS(NodePtr &node, void (*callback)(NodePtr, void * userdata)=nullptr, void * userdata=nullptr);
+    void DFS(NodePtr &node, std::function<void(NodePtr)> callback);
 
-    void BFS(NodePtr &node, void (*callback)(NodePtr, void * userdata)=nullptr, void * userdata=nullptr);
+    void _DFS(NodePtr &node, std::function<void(NodePtr)> callback, NodeVector& visited);
+
+    void BFS(NodePtr &node, std::function<void(NodePtr)> callback);   
 
     NodePtr make_node(int id);
 

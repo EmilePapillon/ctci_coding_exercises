@@ -20,23 +20,29 @@ namespace graph {
         return result != node_vector.end();
     }
 
-    void DFS(NodePtr &node, void (*callback)(NodePtr, void * userdata), void * userdata){
-        static NodeVector visited;
+    void DFS(NodePtr &node, std::function<void(NodePtr)> callback){
+        NodeVector visited;
+        _DFS(node, callback, visited);
+    }
+
+    void _DFS(NodePtr &node, std::function<void(NodePtr)> callback, NodeVector& visited){
         if (!NodeIsInVector(node, visited)) {
             visited.push_back(node);
-            if (callback){
-                callback(node, userdata);
+            callback(node);
+        } else {
+            for(auto item : visited){
+                std::cout<<item->id << " ";
             }
+            std::cout << "\n";
         }
         for (auto&& n : node->children){
             if (!NodeIsInVector(n, visited)){
-                DFS(n, callback, userdata);
+                _DFS(n, callback, visited);
             }
         }
     }
 
-    // I think this will work with circular graphs.
-    void BFS(NodePtr &node, void (*callback)(NodePtr, void * userdata), void * userdata){
+    void BFS(NodePtr &node, std::function<void(NodePtr)> callback){
         NodeVector visited;
         std::list<NodePtr> to_visit;
         to_visit.push_back(node);
@@ -47,7 +53,7 @@ namespace graph {
             to_visit.pop_front();
             
             if (callback){
-                callback(parent, userdata);
+                callback(parent);
             }
             for (NodePtr n : parent->children){
                 if (!NodeIsInVector(n, visited)){
