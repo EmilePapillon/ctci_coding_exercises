@@ -2,11 +2,6 @@
 
 using namespace graph;
 
-void countNodes(NodePtr node, void * i){
-    int * n =(int*)i;
-    *n++;
-}
-
 int main()
 {
     NodePtr root(make_node(0));
@@ -22,7 +17,7 @@ int main()
     //make the graph circular 6-->2
     addEdge(node_six, node_two);
 
-   //root.children.push_back()
+    //test default callbacks (print nodes)
     std::cout << "DFS: ";
     std::cout<< "\n";
     DFS(root, [](NodePtr node, void * userdata){ std::cout << node->id << " " ;}, nullptr);
@@ -32,10 +27,14 @@ int main()
     BFS(root, [](NodePtr node, void * userdata){ std::cout << node->id << " " ;}, nullptr);
     std::cout << "\n\n" ;
 
-    int num_nodes = 0;
-    int * n_ptr = &num_nodes;
-    BFS(root, countNodes, (void*) n_ptr);
-    std::cout << "there are " << *n_ptr << " nodes.\n";
+    int count = 0;
+    DFS(root, [](NodePtr node, void * count){ ++*(int*)count; }, (void*) &count);
+    std::cout << "DFS count: there are " << count << " nodes.\n";
+
+    //test with non NULL callback function and used data
+    count = 0;
+    BFS(root, [](NodePtr node, void * count){ ++*(int*)count; }, (void*) &count);
+    std::cout << "BFS count: there are " << count << " nodes.\n";
     return 0;
 }
 

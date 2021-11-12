@@ -1,3 +1,6 @@
+#ifndef GRAPHS_H
+#define GRAPHS_H
+
 #include <climits>
 #include <iostream>
 #include <vector>
@@ -43,6 +46,16 @@ namespace graph {
 
     void addEdge(NodePtr parent, NodePtr new_node, NodePosition position=NONE);
 
+    /*!
+     * \brief Check weather a graph is a binary search tree
+     * \param root: root of the tree
+     * \_min: used internally 
+     * \_max: used internally
+     * \_is_bst: used internally
+     */ 
     bool isBST(NodePtr root, int _min=INT_MIN, int _max=INT_MAX, bool _is_bst=true);
 
 } //namespace graph
+
+
+#endif

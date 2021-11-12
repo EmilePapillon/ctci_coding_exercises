@@ -17,16 +17,9 @@ namespace graph {
 
     bool NodeIsInVector(NodePtr node, NodeVector node_vector){
         auto result = std::find(node_vector.begin(), node_vector.end(), node);
-        while (result != node_vector.end()) {
-            if (*result == node){ 
-                return true;
-            }
-            result = std::find(result, node_vector.end(), node);
-        }
-        return false;
+        return result != node_vector.end();
     }
 
-    // will it handle a circular graph?
     void DFS(NodePtr &node, void (*callback)(NodePtr, void * userdata), void * userdata){
         static NodeVector visited;
         if (!NodeIsInVector(node, visited)) {
@@ -35,7 +28,6 @@ namespace graph {
                 callback(node, userdata);
             }
         }
-        if (node->children.empty()) return; 
         for (auto&& n : node->children){
             if (!NodeIsInVector(n, visited)){
                 DFS(n, callback, userdata);
@@ -108,13 +100,6 @@ namespace graph {
         }
     }
 
-    /*!
-     * \brief Check weather a graph is a binary search tree
-     * \param root: root of the tree
-     * \_min: used internally 
-     * \_max: used internally
-     * \_is_bst: used internally
-     */ 
     bool isBST(NodePtr root, int _min, int _max, bool _is_bst){  //optimized version of isBST()
         if (!root || !_is_bst){
             return _is_bst; 

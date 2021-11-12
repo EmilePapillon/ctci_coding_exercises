@@ -86,23 +86,23 @@ bool checkBST(NodePtr root, int min=INT_MIN, int max=INT_MAX, bool is_bst=true){
 void echo_binary_result(NodePtr root){
 	echo("Testing if BST");
 	if (badIsBST(root)) {
-		std::cout << "it is a binary tree\n";
+		std::cout << "it is a binary search tree\n";
 	} else {
-		std::cout << "it is NOT a binary tree\n";
+		std::cout << "it is NOT a binary search tree\n";
 	}
 
 	echo("Testing if BST (optimzed)");
 	if (checkBST(root)) {
-		std::cout << "it is a binary tree\n";
+		std::cout << "it is a binary search tree\n";
 	} else {
-		std::cout << "it is NOT a binary tree\n";
+		std::cout << "it is NOT a binary search tree\n";
 	}
 }
 
 
 int main(){
 
-	// a binary tree
+	// a binary search tree
 	NodePtr binary_tree = make_node(5);
 	addEdge(binary_tree, make_node(3), LEFT);
 	addEdge(binary_tree, make_node(7), RIGHT);
@@ -111,7 +111,7 @@ int main(){
 	addEdge(getNode(binary_tree,RIGHT), make_node(6), LEFT);
 	addEdge(getNode(binary_tree,RIGHT), make_node(8), RIGHT);
 
-	// not a binary tree
+	// not a binary search tree
 	NodePtr nonbinary_tree = make_node(5);
 	addEdge(nonbinary_tree, make_node(4), LEFT);
 	addEdge(nonbinary_tree, make_node(7), RIGHT);
